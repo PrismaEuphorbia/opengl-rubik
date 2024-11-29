@@ -49,6 +49,19 @@ public:
             }
         }
     }
+
+    void reset(){
+    	//reset logic for the cube
+    	//click reset and the rubik will turn back to solved
+    }
+
+    void scramble(){
+    	//scramble rubik faces with random
+    }
+
+    void solve(){
+    	//solve the rubik to make every faces same color
+    }
 };
 
 RubikCube cube;
@@ -74,6 +87,40 @@ void reshape(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+void mainMenu (GLint option){
+	switch (option){
+		case 1:
+			cube.reset();
+			break;
+		case 2:
+			cube.scramble();
+			break;
+		case 3:
+			cube.solve();
+			break;
+		case 4:
+			exit(0);
+			break;
+	}
+	glutPostRedisplay();
+}
+
+void menu(){
+	glutCreateMenu(mainMenu);
+	glutAddMenuEntry("Reset", 1);
+	glutAddMenuEntry("Scramble", 2);
+	glutAddMenuEntry("Solve", 3);
+	glutAddMenuEntry("Exit", 4);
+
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
+void mouse(int btn, int state, int x, int y){
+	if (btn == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+		//mouse interaction code here
+	}
+}
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -86,6 +133,10 @@ int main(int argc, char** argv) {
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+
+    menu();
+
+    glutMouseFunc(mouse);
 
     glutMainLoop();
     return 0;

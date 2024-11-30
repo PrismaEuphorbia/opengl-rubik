@@ -1,5 +1,7 @@
 #include <GL/glut.h>
-#include <cmath>
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 class RubikCube {
 private:
@@ -57,6 +59,7 @@ public:
 
     void scramble(){
     	//scramble rubik faces with random
+
     }
 
     void solve(){
@@ -66,13 +69,19 @@ public:
 
 RubikCube cube;
 
+float angleX = 0.0f; // Rotation angle around X-axis
+float angleY = 0.0f; // Rotation angle around Y-axis
+int lastX, lastY; // Last mouse position
+bool isMouseDown = false;
+
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    glRotatef(45.0f, 1.0f, 1.0f, 0.0f);
+    glRotatef(angleX, 1.0f, 0.0f, 0.0f); // Rotate around X-axis
+    glRotatef(angleY, 0.0f, 1.0f, 0.0f); // Rotate around Y-axis
 
     cube.render();
 
@@ -118,6 +127,9 @@ void menu(){
 void mouse(int btn, int state, int x, int y){
 	if (btn == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
 		//mouse interaction code here
+		isMouseDown = true;
+	}else if (state == GLUT_UP){
+		isMouseDown = false;
 	}
 }
 

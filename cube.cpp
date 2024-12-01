@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "Matrix.hpp"
 #include "Cubelet.hpp"
+#include "Camera.hpp"
 
 class RubikCube {
 private:
@@ -69,6 +70,7 @@ public:
 };
 
 RubikCube cube;
+Camera cam;
 
 float angleX = 0.0f; // Rotation angle around X-axis
 float angleY = 0.0f; // Rotation angle around Y-axis
@@ -81,8 +83,10 @@ void display() {
 
 	gluLookAt(8.0, 8.0, 8.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-	glRotatef(angleX, 1.0f, 0.0f, 0.0f); // Rotate around X-axis
-	glRotatef(angleY, 0.0f, 1.0f, 0.0f); // Rotate around Y-axis
+	Vector viewOrtho = Vector(0, 1, 0).cross(Vector(-1, -1, -1));
+
+	glRotatef(angleX, viewOrtho.x, viewOrtho.y, viewOrtho.z); // Rotate around viewer's X-axis
+	glRotatef(angleY, 0.0f, 1.0f, 0.0f); // Rotate around viewer's Y-axis
 
 	cube.render();
 

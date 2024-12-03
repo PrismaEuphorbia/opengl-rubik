@@ -8,6 +8,7 @@
 #ifndef CUBELET_H
 #define CUBELET_H
 #include "Matrix.hpp"
+#include "Vector.hpp"
 
 class Cubelet {
 
@@ -15,6 +16,7 @@ private:
 	float x, y, z;
 	float cubeletSize;
 	float spacing;
+	float facecols[6];
 	Matrix mc;
 
 public:
@@ -22,8 +24,8 @@ public:
 
 	Cubelet();
 	Cubelet(float x0, float y0, float z0);
-
 	void setPos(float x0, float y0, float z0);
+	void dotVertex(Vector v);
 
 };
 
